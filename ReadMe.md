@@ -88,5 +88,31 @@ That's it — modify script names and flags to match this repository.
 Run using command
   python orchestrator.py
 
+## Web UI (local)
+
+A small Flask web UI is included at `webui/app.py`.
+
+Quick start (from project root):
+
+```bash
+# create and activate your virtualenv (if not already)
+python3 -m venv .venv
+source .venv/bin/activate
+
+# install minimal dependencies
+pip install -r requirements.txt
+
+# ensure Ollama daemon is running (or that your `utils.py` LLM call works)
+
+# run the web UI
+python webui/app.py
+
+# open http://localhost:7860 in your browser and paste notes to summarize
+```
+
+Notes:
+- The web UI calls the same agents used by `orchestrator.py` (ReaderAgent, SummarizerAgent, ActionAgent, FormatterAgent). Ensure any dependencies (e.g., a local Ollama daemon) are available.
+- For production use run the Flask app behind a production WSGI server and secure the endpoint appropriately.
+
   
   

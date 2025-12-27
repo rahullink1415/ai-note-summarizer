@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI Note Summarizer — Web UI</title>
+    <style>
+      body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin: 2rem; }
+      textarea { width: 100%; height: 300px; font-size: 14px; padding: 8px; }
+      pre { background:#f6f8fa; padding:12px; border-radius:6px; }
+      button { padding: 8px 14px; font-size: 14px; }
+    </style>
+  </head>
+  <body>
+    <h1>AI Note Summarizer</h1>
+    <form id="form">
+      <label for="text">Paste your notes below:</label>
+      <textarea id="text" name="text" placeholder="Paste notes here..."></textarea>
+      <div style="margin-top:8px;">
+        <button type="submit">Summarize</button>
+      </div>
+    </form>
+
+    <h2>Output</h2>
+    <div id="output">
+      <em>Results will appear here after submission.</em>
+    </div>
+
+    <script>
+      const form = document.getElementById('form');
+      const output = document.getElementById('output');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        output.innerHTML = '<em>Processing…</em>';
+        const text = document.getElementById('text').value;
+        try {
+          const res = await fetch('/summarize', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text })
+          });
+          const json = await res.json();
+          output.innerHTML = '<pre>' + JSON.stringify(json, null, 2) + '</pre>';
+        } catch (err) {
+          output.innerHTML = '<pre>Request failed: ' + err + '</pre>';
+        }
+      });
+    </script>
+  </body>
+</html>
