@@ -1,0 +1,4 @@
+Today I learned about AI automation.
+AI automation uses large language models to automatically
+perform tasks like summarization, classification, and decision making.
+It can save time and reduce manual work.
